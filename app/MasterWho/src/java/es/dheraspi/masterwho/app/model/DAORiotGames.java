@@ -5,17 +5,17 @@
  */
 package es.dheraspi.masterwho.app.model;
 
+import com.robrua.orianna.api.core.RiotAPI;
+import com.robrua.orianna.type.core.championmastery.ChampionMastery;
+import com.robrua.orianna.type.core.common.Region;
+import com.robrua.orianna.type.core.staticdata.Champion;
+import com.robrua.orianna.type.core.summoner.Summoner;
+import es.dheraspi.masterwho.app.servlets.MasterWhoChampion;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 /**
  *
@@ -24,7 +24,7 @@ import javax.json.JsonReader;
 public class DAORiotGames implements DAO
 {
     private String APIKey;
-    private int summId;
+    private Summoner summoner;
     
     @Override
     public void init() throws IOException 
@@ -34,8 +34,37 @@ public class DAORiotGames implements DAO
         
         try (InputStream is = getClass().getResourceAsStream(propFileName))
         {           
-            prop.load(is);         
-            this.APIKey = prop.getProperty("APIKey");
+            prop.load(is);
+            RiotAPI.setAPIKey(prop.getProperty("APIKey"));
         }
+    }
+
+    @Override
+    public void setRegion(String region) 
+    {
+        RiotAPI.setRegion(Region.valueOf(region));
+    }
+
+    @Override
+    public void setSummoner(String name)
+    {
+        summoner = RiotAPI.getSummonerByName(name);
+        System.out.println(summoner);
+    }
+    
+    @Override
+    public List<MasterWhoChampion> getMasteries()
+    {
+        List<ChampionMastery> champs = RiotAPI.getChampionMastery(summoner);
+        System.out.println(champs);
+        List<MasterWhoChampion> realChamps = new LinkedList<>();
+        
+        for (ChampionMastery champMastery: champs)
+        {
+            Champion champ = RiotAPI.getChampionByID(champMastery.getChampionID());
+            MasterWhoChampion mwChamp = new MasterWhoChampion(champMastery,champ);
+            realChamps.add(mwChamp);
+        }
+        return realChamps;
     }
 }

@@ -6,11 +6,25 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Master Who?!</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h1>Master Who?! the game</h1>
+        <form action="inicio.do">
+            Name: <input type="text" name="name" value="Almighty Taric"/>
+            <br>
+            Region: <select name="region">
+                        <option value="EUW">EU West</option>
+                        <option value="EUNE">EU North East</option>
+                        <option value="NA">North America</option>
+                        <option value="LAN">Latino America Norte</option>
+                        <option value="LAS">Latino America Sur</option>
+                    </select>
+            <br>
+            <input type="submit" value="Enviar"/> 
+        </form>
     </body>
 </html>

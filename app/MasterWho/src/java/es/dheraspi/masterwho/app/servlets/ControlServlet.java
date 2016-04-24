@@ -5,8 +5,14 @@
  */
 package es.dheraspi.masterwho.app.servlets;
 
+import com.robrua.orianna.type.core.championmastery.ChampionMastery;
+import com.robrua.orianna.type.core.staticdata.Champion;
+import es.dheraspi.masterwho.app.model.DAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +26,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Control", urlPatterns = {"*.do"})
 public class ControlServlet extends HttpServlet {
 
+    private DAO getDao()
+    {
+        ServletContext sc = this.getServletContext();
+        DAO dao = (DAO) sc.getAttribute("dao");
+        
+        return dao;
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -86,13 +100,27 @@ public class ControlServlet extends HttpServlet {
     private void doPlayMasterWho(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        DAO dao = getDao();
+        List<MasterWhoChampion> champs = dao.getMasteries();
         
+        request.setAttribute("champs", champs);
+        request.getRequestDispatcher("/masterwho.jsp").forward(request, response);
     }
 
     private void doInicio(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        User user = new User();
+        String name = request.getParameter("name");
+        String region = request.getParameter("region");
         
+        DAO dao = getDao();
+        dao.setRegion(region);
+        dao.setSummoner(name);
+        
+        user.setName(name); user.setRegion(region);
+        
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("/inicio.jsp").forward(request, response);
     }
-
 }

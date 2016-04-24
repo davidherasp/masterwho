@@ -5,10 +5,10 @@
  */
 package es.dheraspi.masterwho.app.model;
 
+import es.dheraspi.masterwho.app.servlets.MasterWhoChampion;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Collection;
-import javax.json.JsonValue;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -16,4 +16,7 @@ import javax.json.JsonValue;
  */
 public interface DAO{
     public void init() throws IOException;
+    public void setRegion(String region);
+    public void setSummoner(String region);
+    public List<MasterWhoChampion> getMasteries();
 }

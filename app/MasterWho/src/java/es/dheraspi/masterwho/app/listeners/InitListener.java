@@ -19,7 +19,8 @@ import javax.servlet.ServletContextListener;
 public class InitListener implements ServletContextListener {
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
+    public void contextInitialized(ServletContextEvent sce) 
+    {
         ServletContext sc = sce.getServletContext();
         
         try
