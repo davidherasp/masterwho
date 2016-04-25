@@ -15,9 +15,9 @@
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
     <body>
+        <div style="margin: 25px;">
         <h1>Waddup bruh, welcome to Master Who?!</h1>
         <h2>These are your champions sorted descendingly by the mastery points</h2>
-        <div style="margin: 25px;">
         <c:forEach var="champ" items="${champs}">
             <%--ID: ${champ.id} Level: ${champ.level} Points: ${champ.points} Name: ${champ.name}<br>
             http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.key}_0.jpg
