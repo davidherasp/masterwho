@@ -15,8 +15,7 @@
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
     <body>
-        <div style="margin: 25px;">
-        <h1>Waddup bruh, welcome to Master Who?!</h1>
+        <h1>Here you are!</h1>
         <h2>These are your champions sorted descendingly by the mastery points</h2>
         <c:forEach var="champ" items="${champs}">
             <%--ID: ${champ.id} Level: ${champ.level} Points: ${champ.points} Name: ${champ.name}<br>
@@ -28,12 +27,12 @@
                     <p>Level: ${champ.championMastery.championLevel}</p>
                     <p>Points: ${champ.championMastery.championPoints}</p>
                 </div>
-            </div>--%>               
+            </div>   --%>            
             <div class="flip-container" ontouchstart="this.classList.toggle('click');">
                 <div class="flipper">
                     <div class="front">
                         <!-- front content -->
-                        <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.champion.key}_0.jpg" alt="${champ.champion.name} photo">
+                        <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.champion.key}_0.jpg" alt="${champ.champion.name} photo" style="width: 100%; heigth: 100%;">
                     </div>
                     <div class="back">
                         <!-- back content -->
@@ -45,7 +44,15 @@
                     </div>
                 </div>
             </div>
+            <%--<div class="polaroid" style="width: 200px;">
+                <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.champion.key}_0.jpg" alt="${champ.champion.name} photo" style="width: 100%; heigth: 100%;">
+                <div class="container">
+                    <p>${champ.champion.name}</p>
+                    <p>"${champ.champion.title}"</p>
+                    <p>Level: ${champ.championMastery.championLevel}</p>
+                    <p>Points: ${champ.championMastery.championPoints}</p>
+                </div>
+            </div>--%> 
         </c:forEach>
-        </div>
     </body>
 </html>

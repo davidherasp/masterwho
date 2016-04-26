@@ -21,8 +21,8 @@ and open the template in the editor.
         
 
 .flip-container, .front, .back {
-	width: 308px;
-	height: 560px;
+	width: 221px;
+        height: 400px;
 }
 
 /* flip speed goes here */
@@ -54,6 +54,18 @@ and open the template in the editor.
 	transform: rotateY(180deg);
         background: aliceblue;
         padding: 10px;
+}
+
+div.polaroid {
+    width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    float: left;
+    margin: 10px;
+  }
+
+div.container {
+    padding: 10px;
 }
 
 
