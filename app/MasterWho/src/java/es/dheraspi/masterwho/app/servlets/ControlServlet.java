@@ -11,6 +11,7 @@ import es.dheraspi.masterwho.app.model.DAO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -48,7 +49,9 @@ public class ControlServlet extends HttpServlet {
         String servletPath = request.getServletPath();
         
         switch ( servletPath )
-        {
+        {            
+            case "/showchamps.do":          doShowChamps(request, response);
+                break;
             case "/playmasterwho.do":   doPlayMasterWho(request, response);
                 break;
             case "/inicio.do":          doInicio(request, response);
@@ -97,16 +100,6 @@ public class ControlServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void doPlayMasterWho(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        DAO dao = getDao();
-        List<MasterWhoChampion> champs = dao.getMasteries();
-        
-        request.setAttribute("champs", champs);
-        request.getRequestDispatcher("/masterwho.jsp").forward(request, response);
-    }
-
     private void doInicio(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
@@ -122,5 +115,70 @@ public class ControlServlet extends HttpServlet {
         
         request.setAttribute("user", user);
         request.getRequestDispatcher("/inicio.jsp").forward(request, response);
+    }
+
+    private void doShowChamps(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
+    {
+        DAO dao = getDao();
+        List<MasterWhoChampion> champs = dao.getMasteries();
+        
+        request.setAttribute("champs", champs);
+        request.getRequestDispatcher("/champmasterylist.jsp").forward(request, response);
+    }
+    
+    private void doPlayMasterWho(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException 
+    {
+        DAO dao = getDao();
+        List<MasterWhoChampion> champs = dao.getMasteries();
+        LinkedList<MasterWhoChampion> toplaners = new LinkedList<>();
+        LinkedList<MasterWhoChampion> junglers = new LinkedList<>();
+        LinkedList<MasterWhoChampion> midlaners = new LinkedList<>();
+        LinkedList<MasterWhoChampion> adcs = new LinkedList<>();
+        LinkedList<MasterWhoChampion> supports = new LinkedList<>();
+        
+        for (MasterWhoChampion champ: champs)
+        {
+            List<String> tags = champ.getChampion().getTags();
+            for (String tag: tags)
+            {
+                switch (tag)
+                {
+                    case "Fighter":
+                        toplaners.add(champ);
+                        junglers.add(champ);
+                        midlaners.add(champ);
+                        break;
+                    case "Assasin":
+                        junglers.add(champ);
+                        midlaners.add(champ);
+                        break;
+                    case "Tank":
+                        toplaners.add(champ);
+                        junglers.add(champ);
+                        supports.add(champ);
+                        break;
+                    case "Mage":
+                        toplaners.add(champ);
+                        midlaners.add(champ);
+                        break;
+                    case "Marksman":
+                        adcs.add(champ);
+                        break;
+                    case "Support":
+                        supports.add(champ);
+                        break;
+                }
+            }
+        }
+        
+        request.setAttribute("toplaners", toplaners);
+        request.setAttribute("junglers", junglers);
+        request.setAttribute("midlaners", midlaners);
+        request.setAttribute("adcs", adcs);
+        request.setAttribute("supports", supports);
+        
+        request.getRequestDispatcher("/teambuilder.jsp").forward(request, response);
     }
 }
