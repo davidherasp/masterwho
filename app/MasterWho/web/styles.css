@@ -52,8 +52,18 @@ and open the template in the editor.
 /* back, initially hidden pane */
 .back {
 	transform: rotateY(180deg);
-        background: aliceblue;
+        background: khaki;
         padding: 10px;
+        border: 5px solid black;
+}
+
+.bcontainer {
+        margin-top: 10px;
+        width: 100%;
+        heigth: 100%;
+        background: whitesmoke;
+        padding: 10px;
+        border: 5px solid black;
 }
 
 div.polaroid {

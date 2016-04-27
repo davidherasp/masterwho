@@ -37,10 +37,12 @@
                     <div class="back">
                         <!-- back content -->
                         <img src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${champ.champion.key}.png" alt="${champ.champion.name} avatar">
-                        <p>${champ.champion.name} "${champ.champion.title}"</p>
-                        <p>Role: ${champ.champion.tags}
-                        <p>Level: ${champ.championMastery.championLevel}</p>
-                        <p>Points: ${champ.championMastery.championPoints}</p>
+                        <div class="bcontainer">
+                            <p>${champ.champion.name} "${champ.champion.title}"</p>
+                            <p>Role: ${champ.champion.tags}
+                            <p>Level: ${champ.championMastery.championLevel}</p>
+                            <p>Points: ${champ.championMastery.championPoints}</p>
+                        </div>
                     </div>
                 </div>
             </div>

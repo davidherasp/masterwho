@@ -21,7 +21,7 @@
             <select name="top">
             <c:forEach var="top" items="${toplaners}">
             
-                <option value="${top.champion.ID}" style="background-image:url(http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${top.champion.key}.png);">
+                <option value="${top.champion.ID}" data-img-src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${top.champion.key}.png)">
                     ${top.champion.name}
                 </option>
                 
@@ -33,7 +33,7 @@
             <select name="jng">
             <c:forEach var="jng" items="${junglers}">
                 
-                <option value="${jng.champion.ID}" style="background-image:url(http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${jng.champion.key}.png);">
+                <option value="${jng.champion.ID}" data-img-src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${jng.champion.key}.png);">
                     ${jng.champion.name}
                 </option>
                 
@@ -45,7 +45,7 @@
             <select name="mid">
             <c:forEach var="mid" items="${midlaners}">
                 
-                <option value="${mid.champion.ID}" style="background-image:url(http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${mid.champion.key}.png);">
+                <option value="${mid.champion.ID}" data-img-src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${mid.champion.key}.png);">
                     ${mid.champion.name}
                 </option>
                 
@@ -57,7 +57,7 @@
             <select name="adc">
             <c:forEach var="adc" items="${adcs}">
                 
-                <option value="${adc.champion.ID}" style="background-image:url(http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${adc.champion.key}.png);">
+                <option value="${adc.champion.ID}" data-img-src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${adc.champion.key}.png);">
                     ${adc.champion.name}
                 </option>
                 
@@ -69,7 +69,7 @@
             <select name="sup">
             <c:forEach var="sup" items="${supports}">
              
-                <option value="${sup.champion.ID}" style="background-image:url(http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${sup.champion.key}.png);">
+                <option value="${sup.champion.ID}" data-img-src="http://ddragon.leagueoflegends.com/cdn/6.8.1/img/champion/${sup.champion.key}.png);">
                     ${sup.champion.name}
                 </option>
 
