@@ -5,12 +5,9 @@
  */
 package es.dheraspi.masterwho.app.servlets;
 
-import com.robrua.orianna.type.core.championmastery.ChampionMastery;
-import com.robrua.orianna.type.core.staticdata.Champion;
 import es.dheraspi.masterwho.app.model.DAO;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -50,7 +47,7 @@ public class ControlServlet extends HttpServlet {
         
         switch ( servletPath )
         {            
-            case "/showchamps.do":          doShowChamps(request, response);
+            case "/showchamps.do":      doShowChamps(request, response);
                 break;
             case "/playmasterwho.do":   doPlayMasterWho(request, response);
                 break;
@@ -146,28 +143,28 @@ public class ControlServlet extends HttpServlet {
                 switch (tag)
                 {
                     case "Fighter":
-                        toplaners.add(champ);
-                        junglers.add(champ);
-                        midlaners.add(champ);
+                        if (!toplaners.contains(champ))toplaners.add(champ);
+                        if (!junglers.contains(champ))junglers.add(champ);
+                        if (!midlaners.contains(champ))midlaners.add(champ);
                         break;
                     case "Assasin":
-                        junglers.add(champ);
-                        midlaners.add(champ);
+                        if (!toplaners.contains(champ))junglers.add(champ);
+                        if (!midlaners.contains(champ))midlaners.add(champ);
                         break;
                     case "Tank":
-                        toplaners.add(champ);
-                        junglers.add(champ);
-                        supports.add(champ);
+                        if (!toplaners.contains(champ))toplaners.add(champ);
+                        if (!junglers.contains(champ))junglers.add(champ);
+                        if (!supports.contains(champ))supports.add(champ);
                         break;
                     case "Mage":
-                        toplaners.add(champ);
-                        midlaners.add(champ);
+                        if (!toplaners.contains(champ))toplaners.add(champ);
+                        if (!midlaners.contains(champ))midlaners.add(champ);
                         break;
                     case "Marksman":
-                        adcs.add(champ);
+                        if (!adcs.contains(champ))adcs.add(champ);
                         break;
                     case "Support":
-                        supports.add(champ);
+                        if (!supports.contains(champ))supports.add(champ);
                         break;
                 }
             }
