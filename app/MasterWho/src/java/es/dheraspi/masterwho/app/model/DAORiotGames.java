@@ -10,7 +10,7 @@ import com.robrua.orianna.type.core.championmastery.ChampionMastery;
 import com.robrua.orianna.type.core.common.Region;
 import com.robrua.orianna.type.core.staticdata.Champion;
 import com.robrua.orianna.type.core.summoner.Summoner;
-import es.dheraspi.masterwho.app.servlets.MasterWhoChampion;
+import es.dheraspi.masterwho.app.servlets.MWChampion;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -53,16 +53,16 @@ public class DAORiotGames implements DAO
     }
     
     @Override
-    public List<MasterWhoChampion> getMasteries()
+    public List<MWChampion> getMasteries()
     {
         List<ChampionMastery> champs = RiotAPI.getChampionMastery(summoner);
         System.out.println(champs);
-        List<MasterWhoChampion> realChamps = new LinkedList<>();
+        List<MWChampion> realChamps = new LinkedList<>();
         
         for (ChampionMastery champMastery: champs)
         {
             Champion champ = RiotAPI.getChampionByID(champMastery.getChampionID());
-            MasterWhoChampion mwChamp = new MasterWhoChampion(champMastery,champ);
+            MWChampion mwChamp = new MWChampion(champMastery,champ);
             realChamps.add(mwChamp);
         }
         return realChamps;

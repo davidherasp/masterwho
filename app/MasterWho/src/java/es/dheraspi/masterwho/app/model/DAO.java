@@ -5,7 +5,7 @@
  */
 package es.dheraspi.masterwho.app.model;
 
-import es.dheraspi.masterwho.app.servlets.MasterWhoChampion;
+import es.dheraspi.masterwho.app.servlets.MWChampion;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,5 +18,5 @@ public interface DAO{
     public void init() throws IOException;
     public void setRegion(String region);
     public void setSummoner(String region);
-    public List<MasterWhoChampion> getMasteries();
+    public List<MWChampion> getMasteries();
 }

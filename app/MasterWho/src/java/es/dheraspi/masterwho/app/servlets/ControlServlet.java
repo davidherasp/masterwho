@@ -53,6 +53,8 @@ public class ControlServlet extends HttpServlet {
                 break;
             case "/inicio.do":          doInicio(request, response);
                 break;
+            case "/validateteam.do":    doValidateTeam(request, response);
+                break;
             default:
                 break;
         }
@@ -118,7 +120,7 @@ public class ControlServlet extends HttpServlet {
             throws ServletException, IOException
     {
         DAO dao = getDao();
-        List<MasterWhoChampion> champs = dao.getMasteries();
+        List<MWChampion> champs = dao.getMasteries();
         
         request.setAttribute("champs", champs);
         request.getRequestDispatcher("/champmasterylist.jsp").forward(request, response);
@@ -128,14 +130,14 @@ public class ControlServlet extends HttpServlet {
             throws ServletException, IOException 
     {
         DAO dao = getDao();
-        List<MasterWhoChampion> champs = dao.getMasteries();
-        LinkedList<MasterWhoChampion> toplaners = new LinkedList<>();
-        LinkedList<MasterWhoChampion> junglers = new LinkedList<>();
-        LinkedList<MasterWhoChampion> midlaners = new LinkedList<>();
-        LinkedList<MasterWhoChampion> adcs = new LinkedList<>();
-        LinkedList<MasterWhoChampion> supports = new LinkedList<>();
+        List<MWChampion> champs = dao.getMasteries();
+        LinkedList<MWChampion> toplaners = new LinkedList<>();
+        LinkedList<MWChampion> junglers = new LinkedList<>();
+        LinkedList<MWChampion> midlaners = new LinkedList<>();
+        LinkedList<MWChampion> adcs = new LinkedList<>();
+        LinkedList<MWChampion> supports = new LinkedList<>();
         
-        for (MasterWhoChampion champ: champs)
+        for (MWChampion champ: champs)
         {
             List<String> tags = champ.getChampion().getTags();
             for (String tag: tags)
@@ -143,28 +145,28 @@ public class ControlServlet extends HttpServlet {
                 switch (tag)
                 {
                     case "Fighter":
-                        if (!toplaners.contains(champ))toplaners.add(champ);
-                        if (!junglers.contains(champ))junglers.add(champ);
-                        if (!midlaners.contains(champ))midlaners.add(champ);
+                        if (!toplaners.contains(champ)) toplaners.add(champ);
+                        if (!junglers.contains(champ))  junglers.add(champ);
+                        if (!midlaners.contains(champ)) midlaners.add(champ);
                         break;
                     case "Assasin":
-                        if (!toplaners.contains(champ))junglers.add(champ);
-                        if (!midlaners.contains(champ))midlaners.add(champ);
+                        if (!toplaners.contains(champ)) junglers.add(champ);
+                        if (!midlaners.contains(champ)) midlaners.add(champ);
                         break;
                     case "Tank":
-                        if (!toplaners.contains(champ))toplaners.add(champ);
-                        if (!junglers.contains(champ))junglers.add(champ);
-                        if (!supports.contains(champ))supports.add(champ);
+                        if (!toplaners.contains(champ)) toplaners.add(champ);
+                        if (!junglers.contains(champ))  junglers.add(champ);
+                        if (!supports.contains(champ))  supports.add(champ);
                         break;
                     case "Mage":
-                        if (!toplaners.contains(champ))toplaners.add(champ);
-                        if (!midlaners.contains(champ))midlaners.add(champ);
+                        if (!toplaners.contains(champ)) toplaners.add(champ);
+                        if (!midlaners.contains(champ)) midlaners.add(champ);
                         break;
                     case "Marksman":
-                        if (!adcs.contains(champ))adcs.add(champ);
+                        if (!adcs.contains(champ))      adcs.add(champ);
                         break;
                     case "Support":
-                        if (!supports.contains(champ))supports.add(champ);
+                        if (!supports.contains(champ))  supports.add(champ);
                         break;
                 }
             }
@@ -177,5 +179,21 @@ public class ControlServlet extends HttpServlet {
         request.setAttribute("supports", supports);
         
         request.getRequestDispatcher("/teambuilder.jsp").forward(request, response);
+    }
+
+    private void doValidateTeam(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException    
+    {
+        MWTeam team = new MWTeam();
+        DAO dao = getDao();
+        List<MWChampion> champs = dao.getMasteries();
+        
+        String topID = request.getParameter("top");
+        String jngID = request.getParameter("jng");
+        String midID = request.getParameter("mid");
+        String adcID = request.getParameter("adc");
+        String supID = request.getParameter("sup");
+        
+        //team.setTop( champs. );
     }
 }

@@ -12,11 +12,11 @@ import com.robrua.orianna.type.core.staticdata.Champion;
  *
  * @author david
  */
-public class MasterWhoChampion {
+public class MWChampion {
     private ChampionMastery championMastery;
     private Champion champion; 
 
-    public MasterWhoChampion(ChampionMastery championMastery, Champion champion) {
+    public MWChampion(ChampionMastery championMastery, Champion champion) {
         this.championMastery = championMastery;
         this.champion = champion;
     }
