@@ -53,7 +53,7 @@ public class DAORiotGames implements DAO
     }
     
     @Override
-    public List<MWChampion> getMasteries()
+    public List<MWChampion> getMasteries(Summoner summoner)
     {
         List<ChampionMastery> champs = RiotAPI.getChampionMastery(summoner);
         System.out.println(champs);

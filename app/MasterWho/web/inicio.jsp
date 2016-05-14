@@ -17,12 +17,8 @@
         <h1>¡Welcome ${user.name}!</h1>
         <h2>Pick an option:</h2><br>
         <c:url var="showChampsUrl" value="/showchamps.do">
-            <c:param name="name" value="${user.name}"/>
-            <c:param name="region" value="${user.region}"/>
         </c:url>
         <c:url var="masterWhoUrl" value="/playmasterwho.do">
-            <c:param name="name" value="${user.name}"/>
-            <c:param name="region" value="${user.region}"/>
         </c:url>
         <a href="${showChampsUrl}">Show me ma champs</a><br>
         <a href="${masterWhoUrl}">Let's play Master Who?!</a> 

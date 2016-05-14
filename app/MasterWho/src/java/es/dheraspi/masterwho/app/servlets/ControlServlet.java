@@ -5,9 +5,13 @@
  */
 package es.dheraspi.masterwho.app.servlets;
 
+import com.robrua.orianna.api.core.RiotAPI;
+import com.robrua.orianna.type.core.common.Region;
+import com.robrua.orianna.type.core.summoner.Summoner;
 import es.dheraspi.masterwho.app.model.DAO;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -105,14 +109,13 @@ public class ControlServlet extends HttpServlet {
         User user = new User();
         String name = request.getParameter("name");
         String region = request.getParameter("region");
+        RiotAPI.setRegion(Region.valueOf(region));
         
         DAO dao = getDao();
-        dao.setRegion(region);
-        dao.setSummoner(name);
+        Summoner summoner = RiotAPI.getSummonerByName(name);
         
-        user.setName(name); user.setRegion(region);
-        
-        request.setAttribute("user", user);
+        ServletContext sc = request.getServletContext();
+        sc.setAttribute("summoner", summoner);
         request.getRequestDispatcher("/inicio.jsp").forward(request, response);
     }
 
@@ -120,7 +123,9 @@ public class ControlServlet extends HttpServlet {
             throws ServletException, IOException
     {
         DAO dao = getDao();
-        List<MWChampion> champs = dao.getMasteries();
+        ServletContext sc = request.getServletContext();
+        Summoner summoner = (Summoner) sc.getAttribute("summoner");
+        List<MWChampion> champs = dao.getMasteries(summoner);
         
         request.setAttribute("champs", champs);
         request.getRequestDispatcher("/champmasterylist.jsp").forward(request, response);
@@ -130,70 +135,44 @@ public class ControlServlet extends HttpServlet {
             throws ServletException, IOException 
     {
         DAO dao = getDao();
-        List<MWChampion> champs = dao.getMasteries();
-        LinkedList<MWChampion> toplaners = new LinkedList<>();
-        LinkedList<MWChampion> junglers = new LinkedList<>();
-        LinkedList<MWChampion> midlaners = new LinkedList<>();
-        LinkedList<MWChampion> adcs = new LinkedList<>();
-        LinkedList<MWChampion> supports = new LinkedList<>();
+        ServletContext sc = request.getServletContext();
+        Summoner summoner = (Summoner) sc.getAttribute("summoner");
+        List<MWChampion> champs = dao.getMasteries(summoner);
+        Collection<MWChampion> team = new LinkedList<>();
         
-        for (MWChampion champ: champs)
-        {
-            List<String> tags = champ.getChampion().getTags();
-            for (String tag: tags)
-            {
-                switch (tag)
-                {
-                    case "Fighter":
-                        if (!toplaners.contains(champ)) toplaners.add(champ);
-                        if (!junglers.contains(champ))  junglers.add(champ);
-                        if (!midlaners.contains(champ)) midlaners.add(champ);
-                        break;
-                    case "Assasin":
-                        if (!toplaners.contains(champ)) junglers.add(champ);
-                        if (!midlaners.contains(champ)) midlaners.add(champ);
-                        break;
-                    case "Tank":
-                        if (!toplaners.contains(champ)) toplaners.add(champ);
-                        if (!junglers.contains(champ))  junglers.add(champ);
-                        if (!supports.contains(champ))  supports.add(champ);
-                        break;
-                    case "Mage":
-                        if (!toplaners.contains(champ)) toplaners.add(champ);
-                        if (!midlaners.contains(champ)) midlaners.add(champ);
-                        break;
-                    case "Marksman":
-                        if (!adcs.contains(champ))      adcs.add(champ);
-                        break;
-                    case "Support":
-                        if (!supports.contains(champ))  supports.add(champ);
-                        break;
-                }
-            }
-        }
+        team.add(champs.get(0));
+        team.add(champs.get(1));
+        team.add(champs.get(2));
+        team.add(champs.get(3));
+        team.add(champs.get(4));
         
-        request.setAttribute("toplaners", toplaners);
-        request.setAttribute("junglers", junglers);
-        request.setAttribute("midlaners", midlaners);
-        request.setAttribute("adcs", adcs);
-        request.setAttribute("supports", supports);
-        
+        sc.setAttribute("team", team);
         request.getRequestDispatcher("/teambuilder.jsp").forward(request, response);
     }
 
     private void doValidateTeam(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException    
     {
-        MWTeam team = new MWTeam();
         DAO dao = getDao();
-        List<MWChampion> champs = dao.getMasteries();
+        ServletContext sc = request.getServletContext();
         
-        String topID = request.getParameter("top");
-        String jngID = request.getParameter("jng");
-        String midID = request.getParameter("mid");
-        String adcID = request.getParameter("adc");
-        String supID = request.getParameter("sup");
+        String name = request.getParameter("name");
+        String region = request.getParameter("region");
         
-        //team.setTop( champs. );
+        RiotAPI.setRegion(Region.valueOf(region));
+        Summoner summoner2 = RiotAPI.getSummonerByName(name);
+        List<MWChampion> champs2 = dao.getMasteries(summoner2);
+        
+        Collection<MWChampion> enemyTeam = new LinkedList<>();
+        
+        enemyTeam.add(champs2.get(0));
+        enemyTeam.add(champs2.get(1));
+        enemyTeam.add(champs2.get(2));
+        enemyTeam.add(champs2.get(3));
+        enemyTeam.add(champs2.get(4));
+        
+        sc.setAttribute("enemyTeam", enemyTeam);
+        sc.setAttribute("summoner2", summoner2);
+        request.getRequestDispatcher("/battleground.jsp").forward(request, response);
     }
 }
